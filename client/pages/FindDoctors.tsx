@@ -248,8 +248,10 @@ export default function FindDoctors() {
                     </div>
                   </div>
 
-                  <p className="text-gray-600 text-sm mt-2 line-clamp-2">
-                    {doctor.about}
+                  <p className="text-gray-600 text-sm mt-2">
+                    {doctor.about.length > 100
+                      ? `${doctor.about.substring(0, 100)}...`
+                      : doctor.about}
                   </p>
 
                   <div className="flex items-center space-x-4 mt-3 text-sm text-gray-500">
