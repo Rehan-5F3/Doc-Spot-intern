@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext, createContext } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "../components/ui/button";
 import {
@@ -18,8 +18,49 @@ import {
   Weight,
 } from "lucide-react";
 
+// Import the auth context type (we need to create a shared hook)
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  role: "patient" | "doctor" | "admin";
+}
+
+interface AuthContextType {
+  user: User | null;
+  login: (userData: User) => void;
+  logout: () => void;
+  loading: boolean;
+}
+
+// Create a local context reference (this should match the one in main.tsx)
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
+
+function useAuth() {
+  const context = useContext(AuthContext);
+  if (context === undefined) {
+    // If context is not available, return a fallback user
+    return {
+      user: {
+        id: "1",
+        name: "User",
+        email: "user@example.com",
+        role: "patient" as const,
+      },
+      login: () => {},
+      logout: () => {},
+      loading: false,
+    };
+  }
+  return context;
+}
+
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState("overview");
+  const { user } = useAuth();
+
+  // Extract first name from user's full name
+  const firstName = user?.name?.split(" ")[0] || "User";
 
   const upcomingAppointments = [
     {
