@@ -17,6 +17,13 @@ import {
   Heart,
   Thermometer,
   Weight,
+  CheckCircle,
+  AlertCircle,
+  XCircle,
+  Edit3,
+  MoreHorizontal,
+  Download,
+  Upload,
 } from "lucide-react";
 
 export default function Dashboard() {
@@ -36,6 +43,9 @@ export default function Dashboard() {
       location: "Medical Center Downtown",
       status: "confirmed",
       avatar: "SJ",
+      reason: "Regular check-up",
+      fee: "$150",
+      canReschedule: true,
     },
     {
       id: "2",
@@ -46,29 +56,81 @@ export default function Dashboard() {
       location: "Skin Health Clinic",
       status: "pending",
       avatar: "MC",
+      reason: "Skin consultation",
+      fee: "$120",
+      canReschedule: true,
+    },
+    {
+      id: "3",
+      doctor: "Dr. Emily Rodriguez",
+      specialty: "Pediatrics",
+      date: "2024-01-25",
+      time: "9:00 AM",
+      location: "Children's Medical Center",
+      status: "scheduled",
+      avatar: "ER",
+      reason: "Vaccination",
+      fee: "$100",
+      canReschedule: false,
     },
   ];
 
   const recentAppointments = [
     {
-      id: "3",
-      doctor: "Dr. Emily Rodriguez",
-      specialty: "General Practice",
-      date: "2024-01-05",
-      time: "9:00 AM",
-      status: "completed",
-      notes: "Annual check-up completed. All vitals normal.",
-      avatar: "ER",
-    },
-    {
       id: "4",
       doctor: "Dr. James Wilson",
       specialty: "Orthopedics",
+      date: "2024-01-05",
+      time: "9:00 AM",
+      status: "completed",
+      notes: "Knee examination completed. Physical therapy recommended.",
+      avatar: "JW",
+      summary: "Mild knee strain. Prescribed rest and PT exercises.",
+      followUp: "Follow-up in 2 weeks",
+      medications: ["Ibuprofen 400mg", "Physical therapy exercises"],
+    },
+    {
+      id: "5",
+      doctor: "Dr. Lisa Park",
+      specialty: "General Practice",
       date: "2023-12-28",
       time: "11:30 AM",
       status: "completed",
-      notes: "Knee examination. Recommended physical therapy.",
-      avatar: "JW",
+      notes: "Annual check-up completed. All vitals normal.",
+      avatar: "LP",
+      summary: "Overall health excellent. Continue current lifestyle.",
+      followUp: "Annual check-up next year",
+      medications: ["Daily multivitamin"],
+    },
+  ];
+
+  const notifications = [
+    {
+      id: "1",
+      type: "appointment_confirmed",
+      title: "Appointment Confirmed",
+      message:
+        "Dr. Sarah Johnson confirmed your appointment for Jan 15, 10:00 AM",
+      time: "2 hours ago",
+      read: false,
+    },
+    {
+      id: "2",
+      type: "reminder",
+      title: "Appointment Reminder",
+      message:
+        "You have an appointment with Dr. Michael Chen tomorrow at 2:30 PM",
+      time: "1 day ago",
+      read: false,
+    },
+    {
+      id: "3",
+      type: "follow_up",
+      title: "Follow-up Instructions",
+      message:
+        "Dr. Wilson has added follow-up instructions to your recent visit",
+      time: "3 days ago",
+      read: true,
     },
   ];
 
@@ -79,6 +141,7 @@ export default function Dashboard() {
       value: "72 bpm",
       status: "normal",
       color: "text-green-600",
+      trend: "stable",
     },
     {
       icon: Thermometer,
@@ -86,6 +149,7 @@ export default function Dashboard() {
       value: "98.6°F",
       status: "normal",
       color: "text-green-600",
+      trend: "normal",
     },
     {
       icon: Weight,
@@ -93,6 +157,7 @@ export default function Dashboard() {
       value: "165 lbs",
       status: "stable",
       color: "text-blue-600",
+      trend: "+2 lbs",
     },
     {
       icon: Activity,
@@ -100,6 +165,7 @@ export default function Dashboard() {
       value: "120/80",
       status: "normal",
       color: "text-green-600",
+      trend: "optimal",
     },
   ];
 
@@ -131,6 +197,7 @@ export default function Dashboard() {
       description: "Check updates",
       href: "/notifications",
       color: "bg-orange-500",
+      badge: notifications.filter((n) => !n.read).length,
     },
   ];
 
@@ -140,37 +207,60 @@ export default function Dashboard() {
         bg: "bg-green-100",
         text: "text-green-800",
         label: "Confirmed",
+        icon: CheckCircle,
       },
       pending: {
         bg: "bg-yellow-100",
         text: "text-yellow-800",
-        label: "Pending",
+        label: "Pending Approval",
+        icon: AlertCircle,
       },
-      completed: {
+      scheduled: {
         bg: "bg-blue-100",
         text: "text-blue-800",
-        label: "Completed",
+        label: "Scheduled",
+        icon: Calendar,
       },
-      cancelled: { bg: "bg-red-100", text: "text-red-800", label: "Cancelled" },
+      completed: {
+        bg: "bg-gray-100",
+        text: "text-gray-800",
+        label: "Completed",
+        icon: CheckCircle,
+      },
+      cancelled: {
+        bg: "bg-red-100",
+        text: "text-red-800",
+        label: "Cancelled",
+        icon: XCircle,
+      },
     };
 
     const config =
       statusConfig[status as keyof typeof statusConfig] || statusConfig.pending;
+    const Icon = config.icon;
 
     return (
       <span
-        className={`px-2 py-1 rounded-full text-xs font-medium ${config.bg} ${config.text}`}
+        className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${config.bg} ${config.text}`}
       >
+        <Icon className="w-3 h-3 mr-1" />
         {config.label}
       </span>
     );
+  };
+
+  const handleAppointmentAction = (appointmentId: string, action: string) => {
+    // Handle appointment actions (reschedule, cancel, etc.)
+    console.log(`${action} appointment ${appointmentId}`);
+    // In a real app, this would make API calls
   };
 
   const tabs = [
     { id: "overview", label: "Overview", icon: Activity },
     { id: "appointments", label: "Appointments", icon: Calendar },
     { id: "health", label: "Health Metrics", icon: Heart },
-    { id: "records", label: "Records", icon: FileText },
+    { id: "records", label: "Medical Records", icon: FileText },
+    { id: "notifications", label: "Notifications", icon: Bell },
   ];
 
   return (
@@ -194,7 +284,7 @@ export default function Dashboard() {
               <Link
                 key={action.href}
                 to={action.href}
-                className="medical-card p-6 hover:shadow-medical-lg transition-all duration-300 group"
+                className="medical-card p-6 hover:shadow-medical-lg transition-all duration-300 group relative"
               >
                 <div className="flex items-center space-x-4">
                   <div
@@ -211,6 +301,11 @@ export default function Dashboard() {
                     </p>
                   </div>
                 </div>
+                {action.badge && action.badge > 0 && (
+                  <div className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">
+                    {action.badge}
+                  </div>
+                )}
               </Link>
             );
           })}
@@ -222,11 +317,15 @@ export default function Dashboard() {
             <nav className="flex space-x-8 px-6">
               {tabs.map((tab) => {
                 const Icon = tab.icon;
+                const unreadCount =
+                  tab.id === "notifications"
+                    ? notifications.filter((n) => !n.read).length
+                    : 0;
                 return (
                   <button
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id)}
-                    className={`flex items-center space-x-2 py-4 border-b-2 font-medium text-sm transition-colors ${
+                    className={`flex items-center space-x-2 py-4 border-b-2 font-medium text-sm transition-colors relative ${
                       activeTab === tab.id
                         ? "border-medical-blue text-medical-blue"
                         : "border-transparent text-gray-500 hover:text-gray-700"
@@ -234,6 +333,11 @@ export default function Dashboard() {
                   >
                     <Icon className="w-4 h-4" />
                     <span>{tab.label}</span>
+                    {unreadCount > 0 && (
+                      <span className="ml-1 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">
+                        {unreadCount}
+                      </span>
+                    )}
                   </button>
                 );
               })}
@@ -257,7 +361,7 @@ export default function Dashboard() {
                     </Link>
                   </div>
                   <div className="space-y-4">
-                    {upcomingAppointments.map((appointment) => (
+                    {upcomingAppointments.slice(0, 2).map((appointment) => (
                       <div
                         key={appointment.id}
                         className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow"
@@ -274,7 +378,7 @@ export default function Dashboard() {
                                 {appointment.doctor}
                               </h3>
                               <p className="text-sm text-gray-600">
-                                {appointment.specialty}
+                                {appointment.specialty} • {appointment.reason}
                               </p>
                               <div className="flex items-center space-x-4 mt-1">
                                 <div className="flex items-center space-x-1 text-sm text-gray-500">
@@ -294,10 +398,44 @@ export default function Dashboard() {
                           </div>
                           <div className="flex items-center space-x-3">
                             <StatusBadge status={appointment.status} />
-                            <Button variant="outline" size="sm">
-                              View Details
-                            </Button>
+                            <span className="text-sm font-medium text-medical-blue">
+                              {appointment.fee}
+                            </span>
                           </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Recent Notifications */}
+                <div>
+                  <h2 className="text-xl font-semibold text-medical-dark-blue mb-4">
+                    Recent Notifications
+                  </h2>
+                  <div className="space-y-3">
+                    {notifications.slice(0, 3).map((notification) => (
+                      <div
+                        key={notification.id}
+                        className={`border border-gray-200 rounded-lg p-4 ${!notification.read ? "bg-blue-50 border-blue-200" : ""}`}
+                      >
+                        <div className="flex items-start justify-between">
+                          <div className="flex items-start space-x-3">
+                            <div
+                              className={`w-2 h-2 rounded-full mt-2 ${!notification.read ? "bg-blue-500" : "bg-gray-300"}`}
+                            />
+                            <div>
+                              <h4 className="font-medium text-medical-dark-blue">
+                                {notification.title}
+                              </h4>
+                              <p className="text-sm text-gray-600 mt-1">
+                                {notification.message}
+                              </p>
+                            </div>
+                          </div>
+                          <span className="text-xs text-gray-500">
+                            {notification.time}
+                          </span>
                         </div>
                       </div>
                     ))}
@@ -326,8 +464,8 @@ export default function Dashboard() {
                               <p className="text-lg font-semibold text-medical-dark-blue">
                                 {metric.value}
                               </p>
-                              <p className="text-xs text-gray-500 capitalize">
-                                {metric.status}
+                              <p className="text-xs text-gray-500">
+                                {metric.trend}
                               </p>
                             </div>
                           </div>
@@ -343,7 +481,7 @@ export default function Dashboard() {
               <div className="space-y-6">
                 <div className="flex items-center justify-between">
                   <h2 className="text-xl font-semibold text-medical-dark-blue">
-                    All Appointments
+                    Appointment Management
                   </h2>
                   <Link to="/book">
                     <Button className="medical-button-primary">
@@ -356,7 +494,7 @@ export default function Dashboard() {
                 {/* Upcoming */}
                 <div>
                   <h3 className="text-lg font-medium text-medical-dark-blue mb-3">
-                    Upcoming
+                    Upcoming Appointments
                   </h3>
                   <div className="space-y-3">
                     {upcomingAppointments.map((appointment) => (
@@ -366,8 +504,8 @@ export default function Dashboard() {
                       >
                         <div className="flex items-center justify-between">
                           <div className="flex items-center space-x-4">
-                            <div className="w-10 h-10 bg-medical-blue rounded-full flex items-center justify-center">
-                              <span className="text-white text-sm font-medium">
+                            <div className="w-12 h-12 bg-medical-blue rounded-full flex items-center justify-center">
+                              <span className="text-white font-medium">
                                 {appointment.avatar}
                               </span>
                             </div>
@@ -376,19 +514,48 @@ export default function Dashboard() {
                                 {appointment.doctor}
                               </h4>
                               <p className="text-sm text-gray-600">
-                                {appointment.specialty} • {appointment.date} at{" "}
-                                {appointment.time}
+                                {appointment.specialty} • {appointment.reason}
+                              </p>
+                              <p className="text-sm text-gray-500">
+                                {appointment.date} at {appointment.time} •{" "}
+                                {appointment.location}
                               </p>
                             </div>
                           </div>
                           <div className="flex items-center space-x-2">
                             <StatusBadge status={appointment.status} />
-                            <Button variant="outline" size="sm">
-                              Reschedule
-                            </Button>
-                            <Button variant="outline" size="sm">
-                              Cancel
-                            </Button>
+                            <span className="text-sm font-medium text-medical-blue">
+                              {appointment.fee}
+                            </span>
+                            <div className="flex space-x-1">
+                              {appointment.canReschedule && (
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  onClick={() =>
+                                    handleAppointmentAction(
+                                      appointment.id,
+                                      "reschedule",
+                                    )
+                                  }
+                                >
+                                  <Edit3 className="w-4 h-4 mr-1" />
+                                  Reschedule
+                                </Button>
+                              )}
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() =>
+                                  handleAppointmentAction(
+                                    appointment.id,
+                                    "cancel",
+                                  )
+                                }
+                              >
+                                Cancel
+                              </Button>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -399,7 +566,7 @@ export default function Dashboard() {
                 {/* Recent */}
                 <div>
                   <h3 className="text-lg font-medium text-medical-dark-blue mb-3">
-                    Recent
+                    Recent Appointments
                   </h3>
                   <div className="space-y-3">
                     {recentAppointments.map((appointment) => (
@@ -407,10 +574,10 @@ export default function Dashboard() {
                         key={appointment.id}
                         className="border border-gray-200 rounded-lg p-4"
                       >
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center space-x-4">
-                            <div className="w-10 h-10 bg-gray-400 rounded-full flex items-center justify-center">
-                              <span className="text-white text-sm font-medium">
+                        <div className="flex items-start justify-between">
+                          <div className="flex items-start space-x-4">
+                            <div className="w-12 h-12 bg-gray-400 rounded-full flex items-center justify-center">
+                              <span className="text-white font-medium">
                                 {appointment.avatar}
                               </span>
                             </div>
@@ -422,17 +589,27 @@ export default function Dashboard() {
                                 {appointment.specialty} • {appointment.date} at{" "}
                                 {appointment.time}
                               </p>
-                              {appointment.notes && (
-                                <p className="text-sm text-gray-500 mt-1">
-                                  {appointment.notes}
+                              <div className="mt-2 bg-gray-50 p-3 rounded">
+                                <p className="text-sm text-gray-700 mb-2">
+                                  <strong>Visit Summary:</strong>{" "}
+                                  {appointment.summary}
                                 </p>
-                              )}
+                                <p className="text-sm text-gray-700 mb-2">
+                                  <strong>Follow-up:</strong>{" "}
+                                  {appointment.followUp}
+                                </p>
+                                <p className="text-sm text-gray-700">
+                                  <strong>Medications:</strong>{" "}
+                                  {appointment.medications?.join(", ")}
+                                </p>
+                              </div>
                             </div>
                           </div>
                           <div className="flex items-center space-x-2">
                             <StatusBadge status={appointment.status} />
                             <Button variant="outline" size="sm">
-                              View Summary
+                              <Download className="w-4 h-4 mr-1" />
+                              Download Summary
                             </Button>
                           </div>
                         </div>
@@ -443,18 +620,78 @@ export default function Dashboard() {
               </div>
             )}
 
+            {activeTab === "notifications" && (
+              <div className="space-y-4">
+                <h2 className="text-xl font-semibold text-medical-dark-blue">
+                  Notifications
+                </h2>
+                <div className="space-y-3">
+                  {notifications.map((notification) => (
+                    <div
+                      key={notification.id}
+                      className={`border border-gray-200 rounded-lg p-4 ${!notification.read ? "bg-blue-50 border-blue-200" : ""}`}
+                    >
+                      <div className="flex items-start justify-between">
+                        <div className="flex items-start space-x-3">
+                          <div
+                            className={`w-2 h-2 rounded-full mt-2 ${!notification.read ? "bg-blue-500" : "bg-gray-300"}`}
+                          />
+                          <div>
+                            <h4 className="font-medium text-medical-dark-blue">
+                              {notification.title}
+                            </h4>
+                            <p className="text-sm text-gray-600 mt-1">
+                              {notification.message}
+                            </p>
+                          </div>
+                        </div>
+                        <span className="text-xs text-gray-500">
+                          {notification.time}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
             {activeTab === "health" && (
-              <div className="text-center py-12">
-                <Activity className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-                <h3 className="text-lg font-medium text-gray-900 mb-2">
-                  Health Metrics
-                </h3>
-                <p className="text-gray-600 mb-6">
-                  Track your health data and vital signs over time.
-                </p>
-                <Button className="medical-button-primary">
-                  Add Health Data
-                </Button>
+              <div className="space-y-6">
+                <div className="flex items-center justify-between">
+                  <h2 className="text-xl font-semibold text-medical-dark-blue">
+                    Health Metrics & Records
+                  </h2>
+                  <Button className="medical-button-primary">
+                    <Upload className="w-4 h-4 mr-2" />
+                    Add Health Data
+                  </Button>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                  {healthMetrics.map((metric) => {
+                    const Icon = metric.icon;
+                    return (
+                      <div
+                        key={metric.label}
+                        className="border border-gray-200 rounded-lg p-6 text-center"
+                      >
+                        <Icon
+                          className={`w-8 h-8 ${metric.color} mx-auto mb-3`}
+                        />
+                        <h3 className="font-semibold text-medical-dark-blue mb-2">
+                          {metric.label}
+                        </h3>
+                        <p className="text-2xl font-bold text-medical-dark-blue mb-1">
+                          {metric.value}
+                        </p>
+                        <p className="text-sm text-gray-600">{metric.trend}</p>
+                        <p className="text-xs text-green-600 mt-1 capitalize">
+                          {metric.status}
+                        </p>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             )}
 
@@ -465,9 +702,20 @@ export default function Dashboard() {
                   Medical Records
                 </h3>
                 <p className="text-gray-600 mb-6">
-                  Access your complete medical history and documents.
+                  Access your complete medical history, visit summaries, and
+                  health documents. Hi {firstName}, your records are securely
+                  stored and always accessible.
                 </p>
-                <Button className="medical-button-primary">View Records</Button>
+                <div className="flex justify-center space-x-4">
+                  <Button className="medical-button-primary">
+                    <Download className="w-4 h-4 mr-2" />
+                    Download Records
+                  </Button>
+                  <Button variant="outline">
+                    <Upload className="w-4 h-4 mr-2" />
+                    Upload Document
+                  </Button>
+                </div>
               </div>
             )}
           </div>
