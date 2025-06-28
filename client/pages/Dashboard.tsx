@@ -1,6 +1,7 @@
-import { useState, useContext, createContext } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "../components/ui/button";
+import { useAuth } from "../hooks/useAuth";
 import {
   Calendar,
   Clock,
@@ -17,43 +18,6 @@ import {
   Thermometer,
   Weight,
 } from "lucide-react";
-
-// Import the auth context type (we need to create a shared hook)
-interface User {
-  id: string;
-  name: string;
-  email: string;
-  role: "patient" | "doctor" | "admin";
-}
-
-interface AuthContextType {
-  user: User | null;
-  login: (userData: User) => void;
-  logout: () => void;
-  loading: boolean;
-}
-
-// Create a local context reference (this should match the one in main.tsx)
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
-
-function useAuth() {
-  const context = useContext(AuthContext);
-  if (context === undefined) {
-    // If context is not available, return a fallback user
-    return {
-      user: {
-        id: "1",
-        name: "User",
-        email: "user@example.com",
-        role: "patient" as const,
-      },
-      login: () => {},
-      logout: () => {},
-      loading: false,
-    };
-  }
-  return context;
-}
 
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState("overview");
