@@ -34,5 +34,4 @@ export function useAuth() {
   return context;
 }
 
-export { AuthContext };
 export type { User, AuthContextType };
