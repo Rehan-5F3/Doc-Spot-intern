@@ -147,7 +147,7 @@ function Layout({ children }: { children: React.ReactNode }) {
 }
 
 // Main App component
-function App() {
+function AppContent() {
   const { login } = useAuth();
 
   return (
@@ -207,35 +207,122 @@ function App() {
           />
 
           {/* Placeholder routes */}
-          <Route path="/team" element={<div>Team Page - Coming Soon</div>} />
+          <Route
+            path="/team"
+            element={
+              <div className="min-h-screen flex items-center justify-center">
+                <div className="text-center">
+                  <h1 className="text-2xl font-bold text-medical-dark-blue mb-2">
+                    Team Page
+                  </h1>
+                  <p className="text-gray-600">Coming Soon</p>
+                </div>
+              </div>
+            }
+          />
           <Route
             path="/careers"
-            element={<div>Careers Page - Coming Soon</div>}
+            element={
+              <div className="min-h-screen flex items-center justify-center">
+                <div className="text-center">
+                  <h1 className="text-2xl font-bold text-medical-dark-blue mb-2">
+                    Careers Page
+                  </h1>
+                  <p className="text-gray-600">Coming Soon</p>
+                </div>
+              </div>
+            }
           />
-          <Route path="/help" element={<div>Help Center - Coming Soon</div>} />
+          <Route
+            path="/help"
+            element={
+              <div className="min-h-screen flex items-center justify-center">
+                <div className="text-center">
+                  <h1 className="text-2xl font-bold text-medical-dark-blue mb-2">
+                    Help Center
+                  </h1>
+                  <p className="text-gray-600">Coming Soon</p>
+                </div>
+              </div>
+            }
+          />
           <Route
             path="/privacy"
-            element={<div>Privacy Policy - Coming Soon</div>}
+            element={
+              <div className="min-h-screen flex items-center justify-center">
+                <div className="text-center">
+                  <h1 className="text-2xl font-bold text-medical-dark-blue mb-2">
+                    Privacy Policy
+                  </h1>
+                  <p className="text-gray-600">Coming Soon</p>
+                </div>
+              </div>
+            }
           />
           <Route
             path="/terms"
-            element={<div>Terms of Service - Coming Soon</div>}
+            element={
+              <div className="min-h-screen flex items-center justify-center">
+                <div className="text-center">
+                  <h1 className="text-2xl font-bold text-medical-dark-blue mb-2">
+                    Terms of Service
+                  </h1>
+                  <p className="text-gray-600">Coming Soon</p>
+                </div>
+              </div>
+            }
           />
           <Route
             path="/hipaa"
-            element={<div>HIPAA Compliance - Coming Soon</div>}
+            element={
+              <div className="min-h-screen flex items-center justify-center">
+                <div className="text-center">
+                  <h1 className="text-2xl font-bold text-medical-dark-blue mb-2">
+                    HIPAA Compliance
+                  </h1>
+                  <p className="text-gray-600">Coming Soon</p>
+                </div>
+              </div>
+            }
           />
           <Route
             path="/records"
-            element={<div>Health Records - Coming Soon</div>}
+            element={
+              <div className="min-h-screen flex items-center justify-center">
+                <div className="text-center">
+                  <h1 className="text-2xl font-bold text-medical-dark-blue mb-2">
+                    Health Records
+                  </h1>
+                  <p className="text-gray-600">Coming Soon</p>
+                </div>
+              </div>
+            }
           />
           <Route
             path="/telemedicine"
-            element={<div>Telemedicine - Coming Soon</div>}
+            element={
+              <div className="min-h-screen flex items-center justify-center">
+                <div className="text-center">
+                  <h1 className="text-2xl font-bold text-medical-dark-blue mb-2">
+                    Telemedicine
+                  </h1>
+                  <p className="text-gray-600">Coming Soon</p>
+                </div>
+              </div>
+            }
           />
           <Route
             path="/emergency"
-            element={<div>Emergency Care - Coming Soon</div>}
+            element={
+              <div className="min-h-screen flex items-center justify-center">
+                <div className="text-center">
+                  <h1 className="text-2xl font-bold text-medical-dark-blue mb-2">
+                    Emergency Care
+                  </h1>
+                  <p className="text-gray-600">Coming Soon</p>
+                </div>
+              </div>
+            }
           />
 
           {/* Catch-all route */}
@@ -243,6 +330,15 @@ function App() {
         </Routes>
       </Layout>
     </BrowserRouter>
+  );
+}
+
+// Main App with provider
+function App() {
+  return (
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
   );
 }
 
