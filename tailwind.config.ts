@@ -47,16 +47,17 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        sidebar: {
-          DEFAULT: "hsl(var(--sidebar-background))",
-          foreground: "hsl(var(--sidebar-foreground))",
-          primary: "hsl(var(--sidebar-primary))",
-          "primary-foreground": "hsl(var(--sidebar-primary-foreground))",
-          accent: "hsl(var(--sidebar-accent))",
-          "accent-foreground": "hsl(var(--sidebar-accent-foreground))",
-          border: "hsl(var(--sidebar-border))",
-          ring: "hsl(var(--sidebar-ring))",
+        // DocSpot Medical Brand Colors
+        medical: {
+          blue: "hsl(var(--medical-blue))",
+          green: "hsl(var(--medical-green))",
+          "light-blue": "hsl(var(--medical-light-blue))",
+          "dark-blue": "hsl(var(--medical-dark-blue))",
+          gray: "hsl(var(--medical-gray))",
+          "light-gray": "hsl(var(--medical-light-gray))",
         },
+        warning: "hsl(var(--warning))",
+        success: "hsl(var(--success))",
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -80,10 +81,57 @@ export default {
             height: "0",
           },
         },
+        "fade-in": {
+          "0%": {
+            opacity: "0",
+            transform: "translateY(10px)",
+          },
+          "100%": {
+            opacity: "1",
+            transform: "translateY(0)",
+          },
+        },
+        "slide-in-right": {
+          "0%": {
+            transform: "translateX(100%)",
+          },
+          "100%": {
+            transform: "translateX(0)",
+          },
+        },
+        "pulse-medical": {
+          "0%, 100%": {
+            transform: "scale(1)",
+            opacity: "1",
+          },
+          "50%": {
+            transform: "scale(1.05)",
+            opacity: "0.9",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "fade-in": "fade-in 0.6s ease-out",
+        "slide-in-right": "slide-in-right 0.5s ease-out",
+        "pulse-medical": "pulse-medical 2s ease-in-out infinite",
+      },
+      fontFamily: {
+        sans: [
+          "Inter",
+          "-apple-system",
+          "BlinkMacSystemFont",
+          "Segoe UI",
+          "Roboto",
+          "sans-serif",
+        ],
+      },
+      boxShadow: {
+        medical:
+          "0 4px 6px -1px rgba(59, 130, 246, 0.1), 0 2px 4px -1px rgba(59, 130, 246, 0.06)",
+        "medical-lg":
+          "0 10px 15px -3px rgba(59, 130, 246, 0.1), 0 4px 6px -2px rgba(59, 130, 246, 0.05)",
       },
     },
   },
