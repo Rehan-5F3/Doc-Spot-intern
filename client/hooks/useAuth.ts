@@ -1,4 +1,5 @@
-import { useContext, createContext } from "react";
+import { useContext } from "react";
+import { AuthContext } from "../main";
 
 interface User {
   id: string;
@@ -13,9 +14,6 @@ interface AuthContextType {
   logout: () => void;
   loading: boolean;
 }
-
-// This should match the context from main.tsx
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function useAuth() {
   const context = useContext(AuthContext);
