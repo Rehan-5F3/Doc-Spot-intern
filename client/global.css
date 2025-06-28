@@ -1,0 +1,145 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /**
+   * DocSpot Healthcare Brand Theme
+   * Modern medical appointment booking platform design system
+   */
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 215 25% 27%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 215 25% 27%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 215 25% 27%;
+
+    --primary: 210 100% 56%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 210 17% 98%;
+    --secondary-foreground: 215 25% 27%;
+
+    --muted: 210 17% 98%;
+    --muted-foreground: 215 13% 65%;
+
+    --accent: 142 76% 36%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 210 100% 56%;
+
+    --radius: 0.75rem;
+
+    /* DocSpot specific colors */
+    --medical-blue: 210 100% 56%;
+    --medical-green: 142 76% 36%;
+    --medical-light-blue: 210 100% 97%;
+    --medical-dark-blue: 215 25% 27%;
+    --medical-gray: 215 13% 65%;
+    --medical-light-gray: 210 17% 98%;
+    --warning: 38 92% 50%;
+    --success: 142 76% 36%;
+  }
+
+  .dark {
+    --background: 215 28% 17%;
+    --foreground: 210 20% 98%;
+
+    --card: 215 28% 17%;
+    --card-foreground: 210 20% 98%;
+
+    --popover: 215 28% 17%;
+    --popover-foreground: 210 20% 98%;
+
+    --primary: 210 100% 56%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 215 28% 25%;
+    --secondary-foreground: 210 20% 98%;
+
+    --muted: 215 28% 25%;
+    --muted-foreground: 215 20% 65%;
+
+    --accent: 142 76% 36%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 215 28% 25%;
+    --input: 215 28% 25%;
+    --ring: 210 100% 56%;
+
+    /* DocSpot dark mode colors */
+    --medical-blue: 210 100% 56%;
+    --medical-green: 142 76% 36%;
+    --medical-light-blue: 215 28% 25%;
+    --medical-dark-blue: 210 20% 98%;
+    --medical-gray: 215 20% 65%;
+    --medical-light-gray: 215 28% 25%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings:
+      "rlig" 1,
+      "calt" 1;
+  }
+
+  /* Medical appointment booking specific styles */
+  .medical-gradient {
+    background: linear-gradient(
+      135deg,
+      hsl(var(--medical-blue)) 0%,
+      hsl(var(--medical-green)) 100%
+    );
+  }
+
+  .medical-card {
+    @apply bg-card border border-border rounded-lg shadow-sm;
+  }
+
+  .medical-button-primary {
+    @apply bg-primary text-primary-foreground hover:bg-primary/90 px-6 py-3 rounded-lg font-medium transition-colors;
+  }
+
+  .medical-button-secondary {
+    @apply bg-secondary text-secondary-foreground hover:bg-secondary/80 px-6 py-3 rounded-lg font-medium transition-colors;
+  }
+
+  /* Doctor card hover effects */
+  .doctor-card {
+    @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
+  }
+
+  /* Appointment status colors */
+  .status-scheduled {
+    @apply bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-400;
+  }
+
+  .status-confirmed {
+    @apply bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400;
+  }
+
+  .status-pending {
+    @apply bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-400;
+  }
+
+  .status-cancelled {
+    @apply bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-400;
+  }
+}
