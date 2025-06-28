@@ -151,7 +151,7 @@ export default function Login({ onLogin }: LoginProps) {
                       : "border-gray-200 hover:border-gray-300"
                   }`}
                 >
-                  <Icon className="w-5 h-5 mx-auto mb-1" />
+                  <Icon className="w-5 h-5 mx-auto mb-1 flex flex-col justify-start items-start" />
                   <span className="text-sm font-medium">{label}</span>
                 </button>
               ))}
